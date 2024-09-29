@@ -1,5 +1,3 @@
-import { transform } from "typescript";
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -7,10 +5,10 @@ export default {
     extend: {
       keyframes: {
         shake: {
-          // "0%": { transform: rotate("0deg") },
-          // "25%": { transform: rotate("-5deg") },
-          // "75%": { transform: rotate("-5deg") },
-          // "100%": { transform: rotate("0deg") },
+          "0%": { transform: "rotate(0deg)" },
+          "25%": { transform: "rotate(-10deg)" },
+          "75%": { transform: "rotate(10deg)" },
+          "100%": { transform: "rotate(0deg)" },
         },
       },
       animation: {
