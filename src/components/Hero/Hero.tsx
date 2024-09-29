@@ -113,11 +113,11 @@ export const Hero = () => {
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="text-[#1f1f1f] leading-[14px] text-xs font-semibold">
-                                    {product[0]?.price}
+                                    &#8377;{product[0]?.price}
                                   </p>
                                   {product[0]?.mrp > product[0]?.price && (
                                     <p className="text-[#828282] text-xs font-normal leading-[14px] line-through">
-                                      {product[0]?.mrp}
+                                      &#8377;{product[0]?.mrp}
                                     </p>
                                   )}
                                 </div>
