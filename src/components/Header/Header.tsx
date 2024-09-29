@@ -3,7 +3,7 @@ import { FaCaretDown, FaShoppingCart } from "react-icons/fa";
 
 export const Header = () => {
   return (
-    <div className="grid grid-cols-12">
+    <div className="grid grid-cols-12 border-b-[1px] border-neutral-300">
       <div className="col-span-2 cursor-pointer">
         <img
           src="/public/logo_blinkit.webp"
