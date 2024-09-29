@@ -5,11 +5,7 @@ export const Header = () => {
   return (
     <div className="grid grid-cols-12 border-b-[1px] border-neutral-300">
       <div className="col-span-2 cursor-pointer">
-        <img
-          src="/public/logo_blinkit.webp"
-          alt=""
-          className="object-contain"
-        />
+        <img src="/logo_blinkit.webp" alt="" className="object-contain" />
       </div>
       <div className="col-span-8 grid grid-cols-12 place-items-center">
         {/* LOCATION */}
