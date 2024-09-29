@@ -30,8 +30,9 @@ export const Header = () => {
             <CiSearch />
           </span>
           <input
+            placeholder="Seach 'milk' "
             type="text"
-            className=" px-8 outline-none bg-[#f8f8f8] text-lg w-full py-2 rounded-xl border-[1px] border-[#b7b4b4] text-[#130130]"
+            className="px-8 outline-none bg-[#f8f8f8] text-lg w-full py-2 rounded-xl border-[1px] border-[#b7b4b4] text-[#130130]"
           />
         </div>
         {/* LOGIN */}

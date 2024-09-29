@@ -3,6 +3,7 @@ import { BLINKIT_DATA } from "../../data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useCartContext } from "../../context/CartContext";
 
 interface blinkitDataType {
   objects: Record<string, unknown>[];
@@ -17,6 +18,8 @@ interface productType {
 
 export const Hero = () => {
   const [blinkitData, setBlinkitData] = useState<blinkitDataType | null>(null);
+
+  const { charAt, addToCart, removeFromCart } = useCartContext();
 
   useEffect(() => {
     const fetchBlinkitData = async () => {
@@ -118,7 +121,10 @@ export const Hero = () => {
                                     </p>
                                   )}
                                 </div>
-                                <button className="text-[#318616] border-[1px] border-[#318616] rounded-md px-4 py-1">
+                                <button
+                                  onClick={() => addToCart(product[0])}
+                                  className="text-[#318616] border-[1px] border-[#318616] rounded-md px-4 py-1"
+                                >
                                   ADD
                                 </button>
                               </div>
