@@ -3,6 +3,7 @@ import { BLINKIT_DATA } from "../../data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useCartContext } from "../../context/CartContext";
 
 interface BlinkitDataType {
   objects: BlinkitObject[];
@@ -59,6 +60,12 @@ function isProductContainerTypeArray(
 
 export const Hero = () => {
   const [blinkitData, setBlinkitData] = useState<BlinkitDataType | null>(null);
+  const { cart, addToCart, removeFromCart } = useCartContext();
+
+  const getProductQuantity = (product: ProductType) => {
+    const cartItem = cart.find((item) => item.name === product.name);
+    return cartItem ? cartItem.quantity : 0;
+  };
 
   useEffect(() => {
     const fetchBlinkitData = async () => {
@@ -139,7 +146,7 @@ export const Hero = () => {
                       onSlideChange={() => console.log("slide change")}
                       onSwiper={(swiper) => console.log(swiper)}
                     >
-                      {object.objects[0]?.data?.products?.map(
+                      {object?.objects[0]?.data?.products?.map(
                         (product: ProductType[], productIndex: number) => (
                           <SwiperSlide key={productIndex}>
                             <div className="h-72 p-2 border-[1px] border-neutral-200 rounded-lg">
@@ -169,9 +176,38 @@ export const Hero = () => {
                                         </p>
                                       )}
                                     </div>
-                                    <button className="text-[#318616] border-[1px] border-[#318616] rounded-md px-4 py-1">
+                                    {/* <button className="text-[#318616] border-[1px] border-[#318616] rounded-md px-4 py-1">
                                       ADD
-                                    </button>
+                                    </button> */}
+                                    {(getProductQuantity(product?.[0]) || 0) >
+                                    0 ? (
+                                      <div className="flex items-center justify-around bg-[#318616] text-white border-[1px] rounded-md w-16 px-2 py-1 ">
+                                        <button
+                                          onClick={() =>
+                                            removeFromCart(product[0])
+                                          }
+                                          className="bg-transparent"
+                                        >
+                                          -
+                                        </button>
+                                        <span className="mx-2 text-sm">
+                                          {getProductQuantity(product[0])}
+                                        </span>
+                                        <button
+                                          onClick={() => addToCart(product[0])}
+                                          className="bg-transparent"
+                                        >
+                                          +
+                                        </button>
+                                      </div>
+                                    ) : (
+                                      <button
+                                        onClick={() => addToCart(product[0])}
+                                        className="text-[#318616] border-[1px] border-[#318616] rounded-md w-16 py-1"
+                                      >
+                                        ADD
+                                      </button>
+                                    )}
                                   </div>
                                 </div>
                               </div>

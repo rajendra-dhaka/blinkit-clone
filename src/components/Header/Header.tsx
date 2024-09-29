@@ -1,7 +1,16 @@
 import { CiSearch } from "react-icons/ci";
 import { FaCaretDown, FaShoppingCart } from "react-icons/fa";
+import { useCartContext } from "../../context/CartContext";
 
 export const Header = () => {
+  const { cart } = useCartContext();
+  // Calculate total items and total price
+  const totalItems = cart.reduce((acc, item) => acc + (item.quantity || 0), 0);
+  const totalPrice = cart.reduce(
+    (acc, item) => acc + (item.quantity || 0) * item.price,
+    0
+  );
+
   return (
     <div className="grid grid-cols-12 border-b-[1px] border-neutral-300">
       <div className="col-span-2 cursor-pointer">
@@ -40,10 +49,19 @@ export const Header = () => {
       </div>
       <div className="col-span-2 flex items-center justify-center">
         <button className="cursor-pointer bg-[#0C831F] text-white rounded-lg text-sm font-semibold leading-[14px] px-4 py-4 flex items-center gap-2">
-          <span className="hover:animate-bounce ">
+          <span className="hover:animate-shake ">
             <FaShoppingCart size={20} />
           </span>
-          My Cart
+          {totalItems > 0 ? (
+            <div>
+              <p className="mb-1">
+                {totalItems} item{totalItems > 1 ? "s" : ""}
+              </p>
+              <p>&#8377;{totalPrice.toFixed(2)}</p>
+            </div>
+          ) : (
+            "My Cart"
+          )}
         </button>
       </div>
     </div>
