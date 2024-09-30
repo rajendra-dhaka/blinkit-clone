@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { BLINKIT_DATA } from "../../data";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { useCartContext } from "../../context/CartContext";
+import { SwiperSlide } from "swiper/react";
+import { Product } from "../Product/Product";
+import { CarouselSwiper } from "../CarouselSwiper/CarouselSwiper";
 
 interface BlinkitDataType {
   objects: BlinkitObject[];
@@ -31,7 +30,7 @@ interface SlideType {
 interface CategoryType {
   image: string;
 }
-interface ProductType {
+export interface ProductType {
   name: string;
   image_url: string;
   mrp: number;
@@ -60,12 +59,6 @@ function isProductContainerTypeArray(
 
 export const Hero = () => {
   const [blinkitData, setBlinkitData] = useState<BlinkitDataType | null>(null);
-  const { cart, addToCart, removeFromCart } = useCartContext();
-
-  const getProductQuantity = (product: ProductType) => {
-    const cartItem = cart.find((item) => item.name === product.name);
-    return cartItem ? cartItem.quantity : 0;
-  };
 
   useEffect(() => {
     const fetchBlinkitData = async () => {
@@ -90,6 +83,7 @@ export const Hero = () => {
                 <img src={object?.data?.image} alt={object?.data?.id} />
               </div>
             )}
+
             {/* GRID CATEGORIES */}
             {object.type === 52 && (
               <div className="grid grid-cols-10">
@@ -111,12 +105,7 @@ export const Hero = () => {
               Array.isArray(object.objects) &&
               isSlideTypeArray(object.objects) && (
                 <div className="pb-5">
-                  <Swiper
-                    spaceBetween={50}
-                    slidesPerView={4}
-                    onSlideChange={() => console.log("slide change")}
-                    onSwiper={(swiper) => console.log(swiper)}
-                  >
+                  <CarouselSwiper>
                     {object.objects.map(
                       (slide: SlideType, slideIndex: number) => (
                         <SwiperSlide key={slideIndex}>
@@ -127,7 +116,7 @@ export const Hero = () => {
                         </SwiperSlide>
                       )
                     )}
-                  </Swiper>
+                  </CarouselSwiper>
                 </div>
               )}
 
@@ -140,82 +129,15 @@ export const Hero = () => {
                     {object?.header_config?.title}
                   </h3>
                   <div className="pb-5">
-                    <Swiper
-                      spaceBetween={10}
-                      slidesPerView={6}
-                      onSlideChange={() => console.log("slide change")}
-                      onSwiper={(swiper) => console.log(swiper)}
-                    >
+                    <CarouselSwiper slidesPerView={6} spaceBetween={10}>
                       {object?.objects[0]?.data?.products?.map(
                         (product: ProductType[], productIndex: number) => (
                           <SwiperSlide key={productIndex}>
-                            <div className="h-72 p-2 border-[1px] border-neutral-200 rounded-lg">
-                              <div className="h-full">
-                                <img
-                                  src={product[0]?.image_url}
-                                  alt={`product image - ${productIndex}`}
-                                  className="w-full max-h-36 object-contain"
-                                />
-                                <div>
-                                  <div className="mb-2 h-16 overflow-hidden">
-                                    <h3 className="text-sm font-semibold leading-[18px] text-[#1f1f1f] mb-[6px] line-clamp-2">
-                                      {product[0]?.name}
-                                    </h3>
-                                    <h3 className="text-xs leading-[14px] text-[#666666]">
-                                      {product[0]?.unit}
-                                    </h3>
-                                  </div>
-                                  <div className="flex items-center justify-between">
-                                    <div>
-                                      <p className="text-[#1f1f1f] leading-[14px] text-xs font-semibold">
-                                        &#8377;{product[0]?.price}
-                                      </p>
-                                      {product[0]?.mrp > product[0]?.price && (
-                                        <p className="text-[#828282] text-xs font-normal leading-[14px] line-through">
-                                          &#8377;{product[0]?.mrp}
-                                        </p>
-                                      )}
-                                    </div>
-                                    {/* <button className="text-[#318616] border-[1px] border-[#318616] rounded-md px-4 py-1">
-                                      ADD
-                                    </button> */}
-                                    {(getProductQuantity(product?.[0]) || 0) >
-                                    0 ? (
-                                      <div className="flex items-center justify-around bg-[#318616] text-white border-[1px] rounded-md w-16 px-2 py-1 ">
-                                        <button
-                                          onClick={() =>
-                                            removeFromCart(product[0])
-                                          }
-                                          className="bg-transparent"
-                                        >
-                                          -
-                                        </button>
-                                        <span className="mx-2 text-sm">
-                                          {getProductQuantity(product[0])}
-                                        </span>
-                                        <button
-                                          onClick={() => addToCart(product[0])}
-                                          className="bg-transparent"
-                                        >
-                                          +
-                                        </button>
-                                      </div>
-                                    ) : (
-                                      <button
-                                        onClick={() => addToCart(product[0])}
-                                        className="text-[#318616] border-[1px] border-[#318616] rounded-md w-16 py-1"
-                                      >
-                                        ADD
-                                      </button>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                            <Product product={product[0]} />
                           </SwiperSlide>
                         )
                       )}
-                    </Swiper>
+                    </CarouselSwiper>
                   </div>
                 </div>
               )}
