@@ -3,6 +3,7 @@ import { FaCaretDown, FaShoppingCart } from "react-icons/fa";
 import { useCartContext } from "../../context/CartContext";
 
 export const Header = () => {
+  //   const searchSuggestions = ["milk", "chips", "apples", "rice"];
   const { cart } = useCartContext();
   // Calculate total items and total price
   const totalItems = cart.reduce((acc, item) => acc + (item.quantity || 0), 0);
@@ -34,8 +35,19 @@ export const Header = () => {
           <span className="absolute top-1/2 left-2 -translate-y-1/2">
             <CiSearch />
           </span>
+          {/* 
+          <div className="">
+            {searchSuggestions.map((item, index) => (
+              <p
+                key={index}
+                className="text-[#a8a8a8] absolute left-0 top-0  text-sm"
+              >
+                Search "{item}"
+              </p>
+            ))}
+          </div> */}
+
           <input
-            placeholder="Seach 'milk' "
             type="text"
             className="px-8 outline-none bg-[#f8f8f8] text-lg w-full py-2 rounded-xl border-[1px] border-[#b7b4b4] text-[#130130]"
           />
